@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './transaction.dart';
+import './widges/user_transaction.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -22,20 +22,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 'T1',
-      title: 'new shoe',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 'T2',
-      title: 'Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    )
-  ];
+  // String titleInput;
+  // String amountInput;
 
   @override
   Widget build(BuildContext context) {
@@ -43,30 +31,26 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Flutter App'),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue[100],
-                child: Container(
-                  child: Center(
-                    child: Text('Chart!'),
+      body: SingleChildScrollView(
+        child: Column(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.blue[100],
+                  child: Container(
+                    child: Center(
+                      child: Text('Chart!'),
+                    ),
                   ),
+                  elevation: 5,
                 ),
-                elevation: 5,
               ),
-            ),
-            Column(
-              children: transactions.map((e) {
-                return Card(
-                  child: Text(e.title),
-                );
-              }).toList(),
-            ),
-          ]),
+              UserTransaction(),
+            ]),
+      ),
     );
   }
 }
