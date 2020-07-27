@@ -5,15 +5,17 @@ import 'package:expense_tracker/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> userTransactions;
+  final Function deleteTransaction;
 
   TransactionList({
     this.userTransactions,
+    this.deleteTransaction,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 583,
+      height: 500,
       child: userTransactions.isEmpty
           ? Column(
               children: <Widget>[
@@ -56,7 +58,12 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(DateFormat('dd MMM yyyy')
                         .format(userTransactions[index].date)),
-                    // trailing: ,
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () =>
+                          deleteTransaction(userTransactions[index].id),
+                    ),
                   ),
                 );
               },
