@@ -15,25 +15,29 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
+      height: MediaQuery.of(context).size.height * 0.67,
       child: userTransactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  "No Transactions added yet",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(
-                  height: 100,
-                ),
-                Container(
-                  height: 300,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  children: <Widget>[
+                    Text(
+                      "No Transactions added yet",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: constraints.maxHeight * 0.6,
+                      child: Image.asset(
+                        'assets/images/waiting.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                );
+              },
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
@@ -74,8 +78,14 @@ class TransactionList extends StatelessWidget {
                       trailing: IconButton(
                         icon: Icon(Icons.delete),
                         color: Theme.of(context).errorColor,
-                        onPressed: () =>
-                            deleteTransaction(userTransactions[index].id),
+                        onPressed: () {
+                          deleteTransaction(userTransactions[index].id);
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Transaction deleted'),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
