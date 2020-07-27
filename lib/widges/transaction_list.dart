@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widges/pulseAnimator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -54,13 +55,15 @@ class TransactionList extends StatelessWidget {
                       );
                     },
                     child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: FittedBox(
-                            child: Text(
-                              '₹${userTransactions[index].amount.toString()}',
+                      leading: PulseAnimator(
+                        child: CircleAvatar(
+                          radius: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: FittedBox(
+                              child: Text(
+                                '₹${userTransactions[index].amount.toString()}',
+                              ),
                             ),
                           ),
                         ),
