@@ -14,6 +14,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
       height: MediaQuery.of(context).size.height * 0.67,
       child: userTransactions.isEmpty
@@ -75,18 +76,32 @@ class TransactionList extends StatelessWidget {
                       ),
                       subtitle: Text(DateFormat('dd MMM yyyy')
                           .format(userTransactions[index].date)),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Theme.of(context).errorColor,
-                        onPressed: () {
-                          deleteTransaction(userTransactions[index].id);
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Transaction deleted'),
+                      trailing: screenWidth > 460
+                          ? FlatButton.icon(
+                              icon: Icon(Icons.delete),
+                              label: Text("Delete"),
+                              textColor: Theme.of(context).errorColor,
+                              onPressed: () {
+                                deleteTransaction(userTransactions[index].id);
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Transaction deleted'),
+                                  ),
+                                );
+                              },
+                            )
+                          : IconButton(
+                              icon: Icon(Icons.delete),
+                              color: Theme.of(context).errorColor,
+                              onPressed: () {
+                                deleteTransaction(userTransactions[index].id);
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Transaction deleted'),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
                 );
