@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expenses',
       theme: ThemeData(
           primarySwatch: Colors.teal,
+          errorColor: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Colors.cyanAccent,
           fontFamily: 'Opensans',
@@ -66,6 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
@@ -99,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Chart(_recentTransaction),
               TransactionList(
                 userTransactions: _userTransactions,
+                deleteTransaction: _deleteTransaction,
               ),
             ]),
       ),
