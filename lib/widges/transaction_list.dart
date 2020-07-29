@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import 'package:expense_tracker/widges/transactionItem.dart';
 import 'package:expense_tracker/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
@@ -42,68 +42,10 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                  child: Dismissible(
-                    background: Container(
-                      color: Theme.of(context).errorColor,
-                    ),
-                    key: Key(userTransactions[index].id),
-                    onDismissed: (direction) {
-                      deleteTransaction(userTransactions[index].id);
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Transaction deleted'),
-                        ),
-                      );
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: FittedBox(
-                            child: Text(
-                              '₹${userTransactions[index].amount.toString()}',
-                            ),
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        userTransactions[index].title,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      subtitle: Text(DateFormat('dd MMM yyyy')
-                          .format(userTransactions[index].date)),
-                      trailing: screenWidth > 460
-                          ? FlatButton.icon(
-                              icon: Icon(Icons.delete),
-                              label: Text("Delete"),
-                              textColor: Theme.of(context).errorColor,
-                              onPressed: () {
-                                deleteTransaction(userTransactions[index].id);
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Transaction deleted'),
-                                  ),
-                                );
-                              },
-                            )
-                          : IconButton(
-                              icon: Icon(Icons.delete),
-                              color: Theme.of(context).errorColor,
-                              onPressed: () {
-                                deleteTransaction(userTransactions[index].id);
-                                Scaffold.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Transaction deleted'),
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-                  ),
+                return TransactionItem(
+                  userTransaction: userTransactions[index],
+                  deleteTransaction: deleteTransaction,
+                  screenWidth: screenWidth,
                 );
               },
               itemCount: userTransactions.length,
